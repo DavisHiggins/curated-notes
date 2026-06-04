@@ -1,0 +1,49 @@
+---
+title: "CrownCode AI: Building a Claude-Powered Website Generator in a Week"
+date: "2025-04-28"
+tag: "Projects"
+excerpt: "What I learned shipping an AI-powered website generator built on Claude — the prompt engineering decisions, the architecture, and why the hardest part had nothing to do with code."
+readTime: "5 min read"
+relatedProject: "https://crowncode.higginsd.com"
+relatedProjectLabel: "View CrownCode AI"
+---
+
+CrownCode started with a question I kept coming back to.
+
+What's the real barrier for someone who needs a website but has no technical background? It's not budget — you can get a Squarespace site for $16 a month. It's not even the tools. It's the blank page problem. Someone who runs a small business, a personal brand, or a local service doesn't know what a good website looks like for their context. They don't know what to ask for. And every tool that exists assumes they already have an answer to that question.
+
+CrownCode was built to eliminate that barrier. Describe your business. Get a real, deployable website. That's the entire promise.
+
+**The Architecture**
+
+The technical foundation is straightforward: Claude API on the backend, routed through a Vercel serverless proxy, with a Next.js frontend. The proxy pattern is the same one I built for the portfolio assistant on `portfolio.davishiggins.com` — it keeps the API key off the client and gives me a clean interface to control request structure.
+
+The interesting part isn't the infrastructure. It's the prompt engineering.
+
+Getting Claude to produce clean, deployable HTML/CSS instead of tutorial code is a different problem than most people expect. The first version of my system prompt produced code that technically worked but looked like a generic template. Centered hero, blue button, three-column feature grid, stock photo placeholders. Exactly the kind of thing that makes someone's small business look like it was built from a kit.
+
+The breakthrough was specificity in constraints. Not "build a website for a coffee shop" — "build a single-page site for a specialty coffee shop in Charlotte, NC. Dark background. Matte cream typography. Menu section with four items in a two-column grid. No hero image — use a full-width text headline instead. Contact section with just a phone number and address. No footer links."
+
+That level of specificity produces something that looks designed. The aesthetic constraints are as important as the functional ones, and they need to be in the prompt, not left as assumptions.
+
+The other thing I learned: Claude needs to know what it's NOT building. "No stock image placeholders" eliminates a whole category of output that looks unfinished. "No purple gradients" removes the single most generic AI-generated aesthetic. "No Inter font" forces a more intentional typographic choice. Negative constraints are underused in AI product design.
+
+**Latency Was Harder Than the Claude Integration**
+
+The Claude integration took about a day. Latency handling took three.
+
+Generating a full website takes 6-10 seconds depending on complexity. That's a long time to show someone a spinner. The solution is streaming — reading the response in chunks and rendering it incrementally so the user sees the site being built in real time rather than waiting for a complete response.
+
+Implementing streaming correctly in a Next.js serverless function is not as simple as the documentation makes it look. There's a specific interaction between Vercel's response handling and the ReadableStream API that requires careful buffer management. I broke the output encoding twice before getting it right.
+
+**Where CrownCode Lives**
+
+CrownCode is deployed at `crowncode.higginsd.com` rather than its own domain. That's intentional — it's part of the Higgins Digital ecosystem. The subdomain structure puts it under the agency brand, which is the right positioning. CrownCode isn't a standalone product yet; it's a capability demonstration and a lead generation tool.
+
+The longer-term vision: a client describes their business in a few sentences, selects their industry, and receives a fully structured, branded site with copy, layout, and styling optimized for their context — in under two minutes. The infrastructure is already capable of this. The product layer is what needs development.
+
+**What I'd Change**
+
+The prompt engineering is still manual. Every constraint in the system prompt was written by hand based on observing bad outputs and adding corrective language. The better version of this is a structured constraint system — dropdowns and toggles that inject specific prompt segments based on user input. That would make the quality more consistent and reduce the variance in output quality across different business types.
+
+I'd also add an edit layer. Right now, generation is one-shot. If the user wants to change the color scheme or restructure a section, they re-generate. An edit interface that lets users make targeted changes through natural language — "make the hero text larger" or "change the background to dark navy" — is the feature that would turn CrownCode from impressive into indispensable.

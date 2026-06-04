@@ -1,0 +1,51 @@
+---
+title: "How I Actually Built Propify (And What Broke Along the Way)"
+date: "2025-05-15"
+tag: "Projects"
+excerpt: "The honest behind-the-scenes of building a full-stack NBA analytics platform as a junior in college — architecture decisions, the ML layer, what broke, and what I'd do differently."
+readTime: "7 min read"
+relatedProject: "https://propifyai.davishiggins.com"
+relatedProjectLabel: "View Propify"
+---
+
+Propify started the way most of my projects start — I needed something that didn't exist.
+
+I was spending more time pulling stats from five different sites than actually thinking about the pick I was trying to evaluate. Box scores on ESPN. Prop lines on PrizePicks. Recent averages somewhere else. Defense matchup data from a fourth tab. By the time I had everything in front of me, I'd already lost the thread of what I was actually trying to figure out. I built Propify to solve that for myself.
+
+The first version was a Streamlit app. It worked. Looked rough, loaded slowly, and Render would put it to sleep after 15 minutes of inactivity — which meant every time someone clicked the link, they were waiting 30 seconds for it to wake up before they could do anything. I moved it to Railway, which helped, but by then I already knew the architecture was wrong. Streamlit is a prototype tool. It's not a product. If I wanted Propify to be a real platform, it needed to be built like one.
+
+So I migrated. FastAPI on the backend, Next.js on the frontend. That decision added about three weeks to the timeline and was completely worth it.
+
+**The ML Layer**
+
+The core of Propify is a prediction engine built on a Random Forest Regressor with Ridge regression as a fallback. The question I kept asking during the build was: what does this model actually need to be useful?
+
+Not accurate in some abstract benchmark sense — useful for a human making a real decision. That distinction changed how I built it.
+
+Player prop data is noisy. Small sample sizes, opponent variance, pace of play, injury context that doesn't show up in box scores. A complex model on that data doesn't give you better predictions — it gives you confidently wrong predictions. So the Random Forest was chosen deliberately for its resistance to overfitting on small samples, and Ridge regression sits underneath it as the fallback when the forest's confidence is low.
+
+One thing I learned the hard way: you cannot use standard k-fold cross-validation on sequential sports data. K-fold shuffles the data randomly before splitting, which means your model trains on future games to predict past ones. That's data leakage. Time-series validation splits the data chronologically — train on everything before date X, validate on date X forward. The model saw lower validation accuracy when I switched, but it was actually measuring the right thing for the first time.
+
+The feature set is approximately 30 features per player: rolling averages at multiple windows, head-to-head historical performance against the specific opponent, positional matchup data, home/away splits, rest days, pace adjustments. None of that is groundbreaking — the value isn't in any single feature, it's in having all of them in one place with consistent preprocessing.
+
+I want to be honest about the limitations: this model is not going to beat Vegas. Vegas has decades of data, entire teams of quants, and real-time information flows I don't have access to. That was never the point. The point was to remove enough noise that I could think clearly about a pick, have supporting data in one place, and track the results honestly over time.
+
+**The Technical Pain**
+
+CORS nearly killed me. The issue was a specific conflict: when you send requests with credentials, the server cannot respond with a wildcard `Access-Control-Allow-Origin: *`. You have to specify the exact origin. I was doing both — returning the wildcard and sending credentials — and the browser was rejecting every response silently. Took longer than I'd like to admit to diagnose because the error message was almost identical to a completely different CORS error.
+
+Stripe subscriptions were a first. Implementing a payment wall as a 20-year-old who had never touched billing infrastructure was a genuinely new experience. The Stripe docs are good but they don't tell you what to do when your webhook fires before your database write completes. I learned about idempotency keys the hard way.
+
+Clerk auth with Cloudflare DNS — the CNAME setup took longer than the actual auth integration. The documentation assumes you're on a standard subdomain setup. When you're managing a multi-subdomain architecture across `davishiggins.com`, `higginsd.com`, and related properties, the DNS propagation and certificate validation order matters in ways that aren't obvious.
+
+**What I'd Do Differently**
+
+I'd design the database schema before writing any application code. I made assumptions about how player data would be structured that required two migrations to fix later. Both were avoidable with 30 more minutes of upfront thinking.
+
+I'd also write tests earlier. Not because I believe in test-driven development as a religion, but because the manual testing burden for a stateful application with auth and subscriptions gets heavy fast.
+
+**What It Actually Taught Me**
+
+Propify is the first thing I've built where I had to think like a product manager, a data scientist, a backend engineer, and a designer at the same time — simultaneously, not in sequence. That forced context-switching is disorienting at first. After a few months of it, it becomes a competitive advantage.
+
+The thing I'm most proud of isn't the ML model or the architecture. It's the pick tracker. Being honest about results over time — logging every pick, tracking net profit, acknowledging the losing streaks — is harder than building the prediction engine. It's the part that makes Propify a tool for disciplined thinking rather than just a way to feel confident.
