@@ -197,6 +197,26 @@ a {
   animation: glowPulse 7s ease-in-out infinite;
 }
 
+/* Note-page Previous / Next / Return buttons */
+.note-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--gold-border);
+  background: rgba(201, 168, 76, 0.04);
+  max-width: 260px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+.note-nav-btn:hover {
+  background: rgba(201, 168, 76, 0.1);
+  border-color: var(--gold-border-hot);
+  box-shadow: 0 0 24px rgba(201, 168, 76, 0.12), 0 0 40px rgba(0, 85, 255, 0.08);
+  transform: translateY(-2px);
+}
+
 /* Hero "All Notes" jump button */
 .all-notes-btn {
   padding: 11px 20px;

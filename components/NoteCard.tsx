@@ -9,10 +9,12 @@ export function NoteCard({
   note,
   index,
   grid = false,
+  from = 'all',
 }: {
   note: Note
   index: number
   grid?: boolean
+  from?: string
 }) {
   const pill = tagStyle(note.tag)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -33,13 +35,23 @@ export function NoteCard({
 
   return (
     <motion.a
-      href={`/notes/${note.slug}`}
+      href={`/notes/${note.slug}?from=${encodeURIComponent(from)}`}
       className={`group block ${grid ? 'h-full' : ''}`}
       data-cursor="pointer"
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: grid ? 20 : 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      // In the All grid, trigger before the card enters the viewport and use a
+      // small per-row stagger so cards appear quickly while scrolling.
+      viewport={
+        grid
+          ? { once: true, margin: '0px 0px 200px 0px' }
+          : { once: true, margin: '-60px' }
+      }
+      transition={{
+        duration: grid ? 0.4 : 0.6,
+        delay: grid ? (index % 3) * 0.05 : index * 0.07,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       whileHover={grid ? { y: -5 } : { x: 6 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

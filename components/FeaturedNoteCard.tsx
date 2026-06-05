@@ -28,7 +28,7 @@ export function FeaturedNoteCard({ note, index }: { note: Note; index: number })
 
   return (
     <motion.a
-      href={`/notes/${note.slug}`}
+      href={`/notes/${note.slug}?from=featured`}
       className="group block h-full"
       data-cursor="pointer"
       initial={{ opacity: 0, y: 32 }}

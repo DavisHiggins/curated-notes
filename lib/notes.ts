@@ -14,6 +14,13 @@ export type Note = {
   content: string
 }
 
+/** Slugs shown in the Featured row, in display order. */
+export const FEATURED_SLUGS = [
+  'propify-breakdown',
+  'balancing-everything',
+  'faith-christ-relationship',
+]
+
 const NOTES_DIR = path.join(process.cwd(), 'content/notes')
 
 export function getAllNotes(): Note[] {

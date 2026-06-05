@@ -1,4 +1,4 @@
-import { getAllNotes } from '@/lib/notes'
+import { getAllNotes, FEATURED_SLUGS } from '@/lib/notes'
 import type { Note } from '@/lib/notes'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
@@ -7,12 +7,6 @@ import { FeaturedNoteCard } from '@/components/FeaturedNoteCard'
 import { TagFilter } from '@/components/TagFilter'
 import { Footer } from '@/components/Footer'
 import { HashScroll } from '@/components/HashScroll'
-
-const FEATURED_SLUGS = [
-  'propify-breakdown',
-  'balancing-everything',
-  'faith-christ-relationship',
-]
 
 export default function HomePage() {
   const notes = getAllNotes()

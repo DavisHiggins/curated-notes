@@ -1,13 +1,15 @@
+import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getAllNotes, getNoteBySlug } from '@/lib/notes'
+import { getAllNotes, getNoteBySlug, FEATURED_SLUGS } from '@/lib/notes'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ReadingProgress } from '@/components/ReadingProgress'
 import { NoteReveal } from '@/components/NoteReveal'
 import { NoteIntro } from '@/components/NoteIntro'
 import { BackLink } from '@/components/BackLink'
+import { NoteNav } from '@/components/NoteNav'
 
 export function generateStaticParams() {
   return getAllNotes().map((note) => ({ slug: note.slug }))
@@ -109,6 +111,18 @@ export default async function NotePage({
               </div>
             )}
           </NoteReveal>
+
+          <Suspense fallback={null}>
+            <NoteNav
+              notes={getAllNotes().map((n) => ({
+                slug: n.slug,
+                title: n.title,
+                tag: n.tag,
+              }))}
+              featuredSlugs={FEATURED_SLUGS}
+              currentSlug={note.slug}
+            />
+          </Suspense>
         </article>
       </main>
 
