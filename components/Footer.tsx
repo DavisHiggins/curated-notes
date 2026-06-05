@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
+import { SocialLinks } from './SocialLinks'
 
 const GOLD_FILTER =
   'brightness(0) saturate(100%) invert(74%) sepia(45%) saturate(600%) hue-rotate(5deg) brightness(95%)'
@@ -98,6 +99,10 @@ export function Footer() {
           }}
         />
       </motion.div>
+
+      <div style={{ marginBottom: 36 }}>
+        <SocialLinks />
+      </div>
 
       <span
         aria-hidden

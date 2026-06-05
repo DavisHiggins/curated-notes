@@ -50,6 +50,13 @@ export function FeaturedNoteCard({ note, index }: { note: Note; index: number })
           padding: '26px 26px 24px',
         }}
       >
+        {/* slight glimmer sweep */}
+        <span
+          className="card-shine"
+          aria-hidden
+          style={{ animationDelay: `${index * 1.6 + 0.6}s` }}
+        />
+
         {/* electric-blue accent sheen on hover */}
         <span
           aria-hidden

@@ -30,6 +30,7 @@ export default function HomePage() {
         <section className="px-6 sm:px-10 py-24">
           <div className="max-w-[1100px] mx-auto">
             {/* Featured row: three notes, squeezed left to right */}
+            <div id="featured" className="scroll-mt-28" />
             <div className="flex items-center gap-4 mb-7">
               <span
                 className="font-ui"

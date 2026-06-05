@@ -74,18 +74,26 @@ export function TagFilter({
         })}
       </div>
 
-      <motion.div layout className="flex flex-col gap-5 max-w-[700px] mx-auto">
+      <motion.div
+        layout
+        className={
+          active === 'all'
+            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch'
+            : 'flex flex-col gap-5 max-w-[700px] mx-auto'
+        }
+      >
         <AnimatePresence mode="popLayout">
           {gridNotes.map((note, i) => (
             <motion.div
               key={note.slug}
               layout
+              className={active === 'all' ? 'h-full' : ''}
               initial={{ opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              <NoteCard note={note} index={i} />
+              <NoteCard note={note} index={i} grid={active === 'all'} />
             </motion.div>
           ))}
         </AnimatePresence>

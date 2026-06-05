@@ -25,9 +25,25 @@ function splitChars(text: string, baseDelay: number, color?: string) {
   ))
 }
 
+type LenisLike = {
+  scrollTo: (
+    target: string | number | HTMLElement,
+    opts?: { offset?: number }
+  ) => void
+}
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+
+  const jumpTo = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const el = document.getElementById(id)
+    if (!el) return
+    const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis
+    if (lenis) lenis.scrollTo(el, { offset: -90 })
+    else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -153,22 +169,84 @@ export function Hero() {
           </span>
         </h1>
 
-        <motion.p
-          className="font-ui"
+        <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.85, ease: 'easeOut' }}
-          style={{
-            marginTop: 28,
-            fontSize: 16,
-            lineHeight: 1.65,
-            color: 'var(--text-muted)',
-            maxWidth: 480,
-          }}
+          style={{ marginTop: 28, maxWidth: 480 }}
         >
-          A public notebook by Davis Higgins. Data science, AI, building, faith,
-          and the systems behind the work.
-        </motion.p>
+          <p
+            className="font-ui"
+            style={{
+              fontSize: 16,
+              lineHeight: 1.65,
+              color: 'var(--text-muted)',
+              margin: 0,
+            }}
+          >
+            A public notebook by Davis Higgins. Data science, AI, building, faith,
+            and the systems behind the work.
+          </p>
+
+          {/* Jump links, left-aligned beneath the text: Featured, then All Notes */}
+          <div className="flex flex-wrap items-center gap-3" style={{ marginTop: 22 }}>
+            <a
+              href="#featured"
+              onClick={jumpTo('featured')}
+              data-cursor="pointer"
+              className="all-notes-btn group inline-flex items-center gap-2.5"
+            >
+              <span
+                className="font-ui"
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Featured
+              </span>
+              <motion.span
+                aria-hidden
+                className="inline-block"
+                animate={{ y: [0, 4, 0] }}
+                transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+                style={{ fontSize: 14, lineHeight: 1 }}
+              >
+                ↓
+              </motion.span>
+            </a>
+
+            <a
+              href="#all-notes"
+              onClick={jumpTo('all-notes')}
+              data-cursor="pointer"
+              className="all-notes-btn group inline-flex items-center gap-2.5"
+            >
+              <span
+                className="font-ui"
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                All Notes
+              </span>
+              <motion.span
+                aria-hidden
+                className="inline-block"
+                animate={{ y: [0, 4, 0] }}
+                transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut', delay: 0.2 }}
+                style={{ fontSize: 14, lineHeight: 1 }}
+              >
+                ↓
+              </motion.span>
+            </a>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator, bottom-left */}

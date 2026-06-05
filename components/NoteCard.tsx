@@ -5,7 +5,15 @@ import { motion } from 'framer-motion'
 import type { Note } from '@/lib/notes'
 import { tagStyle, formatDate } from '@/lib/tags'
 
-export function NoteCard({ note, index }: { note: Note; index: number }) {
+export function NoteCard({
+  note,
+  index,
+  grid = false,
+}: {
+  note: Note
+  index: number
+  grid?: boolean
+}) {
   const pill = tagStyle(note.tag)
   const innerRef = useRef<HTMLDivElement>(null)
   const number = String(index + 1).padStart(2, '0')
@@ -26,27 +34,36 @@ export function NoteCard({ note, index }: { note: Note; index: number }) {
   return (
     <motion.a
       href={`/notes/${note.slug}`}
-      className="group block"
+      className={`group block ${grid ? 'h-full' : ''}`}
       data-cursor="pointer"
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ x: 6 }}
+      whileHover={grid ? { y: -5 } : { x: 6 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <div
         ref={innerRef}
-        className="relative overflow-hidden transition-[background,border-color,box-shadow] duration-300 group-hover:bg-[var(--bg-card-hover)] group-hover:border-[var(--border-hover)] group-hover:shadow-[0_0_32px_rgba(201,168,76,0.09),0_0_56px_rgba(0,85,255,0.07)]"
+        className={`relative overflow-hidden transition-[background,border-color,box-shadow] duration-300 group-hover:bg-[var(--bg-card-hover)] group-hover:border-[var(--border-hover)] group-hover:shadow-[0_0_32px_rgba(201,168,76,0.09),0_0_56px_rgba(0,85,255,0.07)] ${
+          grid ? 'h-full flex flex-col' : ''
+        }`}
         style={{
           background: 'var(--bg-card)',
           border: '1px solid var(--border)',
           borderRadius: 14,
-          padding: '28px 32px',
+          padding: grid ? '24px 26px' : '28px 32px',
           transitionTimingFunction: 'ease',
         }}
       >
+        {/* slight glimmer sweep */}
+        <span
+          className="card-shine"
+          aria-hidden
+          style={{ animationDelay: `${index * 1.3}s` }}
+        />
+
         {/* gold left border, scales in on hover */}
         <span
           className="absolute left-0 top-0 bottom-0 origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100"
@@ -128,9 +145,10 @@ export function NoteCard({ note, index }: { note: Note; index: number }) {
             lineHeight: 1.6,
             color: 'var(--text-muted)',
             display: '-webkit-box',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: grid ? 3 : 2,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
+            flexGrow: grid ? 1 : undefined,
           }}
         >
           {note.excerpt}

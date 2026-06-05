@@ -197,6 +197,80 @@ a {
   animation: glowPulse 7s ease-in-out infinite;
 }
 
+/* Hero "All Notes" jump button */
+.all-notes-btn {
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-border);
+  background: rgba(201, 168, 76, 0.06);
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.all-notes-btn:hover {
+  background: var(--gold);
+  color: #06080f;
+  border-color: var(--gold);
+  box-shadow: 0 0 24px rgba(201, 168, 76, 0.35), 0 0 44px rgba(0, 85, 255, 0.16);
+}
+
+/* Footer social icon buttons */
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-border);
+  background: rgba(201, 168, 76, 0.05);
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, transform 0.3s ease;
+}
+.social-icon:hover {
+  color: var(--gold-bright);
+  background: rgba(201, 168, 76, 0.12);
+  border-color: var(--gold-border-hot);
+  box-shadow: 0 0 18px rgba(201, 168, 76, 0.35), 0 0 30px rgba(0, 85, 255, 0.14);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Slight glimmer sweep across cards */
+@keyframes glimmerSweep {
+  0% {
+    transform: translateX(-130%) skewX(-12deg);
+  }
+  22% {
+    transform: translateX(130%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(130%) skewX(-12deg);
+  }
+}
+
+.card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.05) 47%,
+    rgba(201, 168, 76, 0.12) 50%,
+    rgba(255, 255, 255, 0.05) 53%,
+    transparent 62%
+  );
+  transform: translateX(-130%) skewX(-12deg);
+  animation: glimmerSweep 9s ease-in-out infinite;
+}
+
+.group:hover .card-shine {
+  animation-duration: 2.6s;
+}
+
 /* Scroll indicator line */
 @keyframes scrollLine {
   0% {
