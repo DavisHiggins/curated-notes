@@ -197,6 +197,28 @@ a {
   animation: glowPulse 7s ease-in-out infinite;
 }
 
+/* Hero title + content padding (desktop unchanged; mobile reduced to fit) */
+.hero-content {
+  padding-left: 15%;
+  padding-right: 6%;
+}
+.hero-title {
+  font-size: clamp(52px, 9vw, 120px);
+  line-height: 0.88;
+}
+
+@media (max-width: 640px) {
+  .hero-content {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+  .hero-title {
+    /* Smaller so "Curated" and "Notes" each fit on one line, never clipped */
+    font-size: clamp(34px, 12vw, 60px);
+    line-height: 0.95;
+  }
+}
+
 /* Note-page Previous / Next / Return buttons */
 .note-nav-btn {
   display: inline-flex;

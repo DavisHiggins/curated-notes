@@ -122,8 +122,8 @@ export function Hero() {
 
       <div
         ref={contentRef}
-        className="relative w-full"
-        style={{ paddingLeft: '15%', paddingRight: '6%', zIndex: 1 }}
+        className="relative w-full hero-content"
+        style={{ zIndex: 1 }}
       >
         {/* Decorative shimmer rule + eyebrow */}
         <div className="flex items-center gap-4 mb-7">
@@ -153,18 +153,16 @@ export function Hero() {
         </div>
 
         <h1
-          className="font-display"
-          style={{
-            margin: 0,
-            fontWeight: 800,
-            lineHeight: 0.88,
-            fontSize: 'clamp(52px, 9vw, 120px)',
-          }}
+          className="font-display hero-title"
+          style={{ margin: 0, fontWeight: 800 }}
         >
-          <span className="block" style={{ color: 'var(--text)' }}>
+          <span className="block" style={{ color: 'var(--text)', whiteSpace: 'nowrap' }}>
             {splitChars('CURATED', 0.2)}
           </span>
-          <span className="block" style={{ fontStyle: 'italic', color: 'var(--gold)' }}>
+          <span
+            className="block"
+            style={{ fontStyle: 'italic', color: 'var(--gold)', whiteSpace: 'nowrap' }}
+          >
             {splitChars('NOTES.', 0.5, 'var(--gold)')}
           </span>
         </h1>
