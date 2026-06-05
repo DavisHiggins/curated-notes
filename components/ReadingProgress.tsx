@@ -19,7 +19,8 @@ export function ReadingProgress() {
         right: 0,
         height: 2,
         zIndex: 100,
-        background: 'var(--gold)',
+        background: 'linear-gradient(90deg, #C9A84C 0%, #E4C06E 45%, #0055FF 100%)',
+        boxShadow: '0 0 12px rgba(0,85,255,0.4)',
         transformOrigin: 'left',
         scaleX,
       }}

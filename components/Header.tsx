@@ -1,52 +1,96 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
+
+// Tints a dark logo to gold.
+const GOLD_FILTER =
+  'brightness(0) saturate(100%) invert(74%) sepia(45%) saturate(600%) hue-rotate(5deg) brightness(95%)'
 
 export function Header() {
+  const [scrolled, setScrolled] = useState(false)
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setScrolled(latest > 60)
+  })
+
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-4"
+    <motion.header
+      initial={{ y: -8, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-3.5"
       style={{
-        background: 'rgba(5,7,11,0.85)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        background: scrolled ? 'rgba(6,8,15,0.88)' : 'rgba(6,8,15,0)',
+        backdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
+        borderBottom: scrolled
+          ? '1px solid rgba(201,168,76,0.12)'
+          : '1px solid rgba(201,168,76,0)',
+        transition:
+          'background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease',
       }}
     >
-      <a href="/" className="flex items-center gap-3" data-cursor="pointer" aria-label="Curated Notes home">
-        <span
-          className="flex items-center justify-center rounded-lg overflow-hidden"
+      <a
+        href="/"
+        className="group flex items-center gap-3.5"
+        data-cursor="pointer"
+        aria-label="Curated Notes home"
+      >
+        {/* TODO: Replace with SVG for draw-on animation. Only a PNG logo is
+            provided, so a static gold-tinted image is used (see Section 10). */}
+        <Image
+          src="/cnoteslogo.png"
+          alt="Davis Higgins logo"
+          width={52}
+          height={52}
+          priority
+          className="transition-transform duration-300 group-hover:scale-[1.04]"
           style={{
-            width: 40,
-            height: 40,
-            background: '#fff',
+            height: 'clamp(38px, 6vw, 52px)',
+            width: 'auto',
+            filter: GOLD_FILTER,
           }}
-        >
-          <Image
-            src="/dh-logo.png"
-            alt="Davis Higgins logo"
-            width={32}
-            height={32}
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </span>
+        />
+
+        <span
+          aria-hidden
+          style={{
+            width: 1,
+            height: 26,
+            background: 'rgba(201,168,76,0.3)',
+          }}
+        />
+
         <span className="flex flex-col leading-none">
           <span
-            className="font-display"
+            className="font-ui"
             style={{
-              color: 'var(--gold)',
-              fontWeight: 700,
-              fontSize: 14,
-              letterSpacing: '0.02em',
+              color: 'var(--text)',
+              fontWeight: 600,
+              fontSize: 11,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              borderBottom: scrolled
+                ? '1px solid rgba(201,168,76,0.2)'
+                : '1px solid transparent',
+              paddingBottom: 2,
+              transition: 'border-color 0.4s ease',
             }}
           >
             DAVIS HIGGINS
           </span>
           <span
-            className="font-body"
-            style={{ color: 'var(--text-muted)', fontSize: 11, marginTop: 2 }}
+            className="font-ui"
+            style={{
+              color: 'var(--text-muted)',
+              fontWeight: 400,
+              fontSize: 11,
+              letterSpacing: '0.08em',
+              marginTop: 3,
+            }}
           >
             Curated Notes
           </span>
@@ -55,17 +99,19 @@ export function Header() {
 
       <motion.a
         href="https://davishiggins.com"
-        className="font-body group inline-flex items-center gap-1"
-        style={{ color: 'var(--text-muted)', fontSize: 13 }}
-        whileHover={{ x: -3 }}
+        className="font-ui group inline-flex items-center gap-1.5"
+        style={{ color: 'var(--text-muted)', fontSize: 12, fontWeight: 500 }}
+        whileHover={{ x: -2 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         data-cursor="pointer"
       >
-        <span aria-hidden>←</span>
-        <span className="border-b border-transparent transition-colors group-hover:border-[var(--gold)] group-hover:text-[var(--gold)]">
+        <motion.span aria-hidden whileHover={{ x: -4 }} className="inline-block">
+          ←
+        </motion.span>
+        <span className="transition-colors duration-200 group-hover:text-[var(--gold)]">
           davishiggins.com
         </span>
       </motion.a>
-    </header>
+    </motion.header>
   )
 }

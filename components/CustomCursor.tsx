@@ -8,7 +8,6 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
-    // Only enable on devices with a precise pointer
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       return
     }
@@ -23,7 +22,7 @@ export function CustomCursor() {
       mouse.x = e.clientX
       mouse.y = e.clientY
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mouse.x - 3}px, ${mouse.y - 3}px, 0)`
+        dotRef.current.style.transform = `translate3d(${mouse.x - 2.5}px, ${mouse.y - 2.5}px, 0)`
       }
     }
 
@@ -39,16 +38,18 @@ export function CustomCursor() {
     }
 
     const tick = () => {
-      // lerp ring toward mouse (~80ms lag feel)
       ring.x += (mouse.x - ring.x) * 0.18
       ring.y += (mouse.y - ring.y) * 0.18
       if (ringRef.current) {
-        const size = hovering ? 52 : 36
+        const size = hovering ? 50 : 34
         ringRef.current.style.width = `${size}px`
         ringRef.current.style.height = `${size}px`
         ringRef.current.style.borderColor = hovering
-          ? 'var(--gold)'
-          : 'rgba(255,255,255,0.35)'
+          ? '#0055FF'
+          : 'rgba(201,168,76,0.45)'
+        ringRef.current.style.boxShadow = hovering
+          ? '0 0 14px rgba(0,85,255,0.45)'
+          : '0 0 0 rgba(0,85,255,0)'
         ringRef.current.style.transform = `translate3d(${ring.x - size / 2}px, ${
           ring.y - size / 2
         }px, 0)`
@@ -77,12 +78,12 @@ export function CustomCursor() {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: 6,
-          height: 6,
+          width: 5,
+          height: 5,
           borderRadius: '50%',
-          background: '#fff',
+          background: '#C9A84C',
           pointerEvents: 'none',
-          zIndex: 9998,
+          zIndex: 9997,
           willChange: 'transform',
         }}
         aria-hidden
@@ -93,14 +94,15 @@ export function CustomCursor() {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: 36,
-          height: 36,
+          width: 34,
+          height: 34,
           borderRadius: '50%',
-          border: '1.5px solid rgba(255,255,255,0.35)',
+          border: '1.5px solid rgba(201,168,76,0.45)',
           pointerEvents: 'none',
-          zIndex: 9998,
+          zIndex: 9997,
           willChange: 'transform, width, height',
-          transition: 'width 0.2s ease, height 0.2s ease, border-color 0.2s ease',
+          transition:
+            'width 0.18s ease, height 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease',
         }}
         aria-hidden
       />

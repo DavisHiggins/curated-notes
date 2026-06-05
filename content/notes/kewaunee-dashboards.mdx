@@ -1,41 +1,39 @@
 ---
-title: "What 20+ Executive Dashboards Actually Taught Me About Data"
-date: "2025-03-10"
-tag: "Projects"
-excerpt: "My internship at Kewaunee Scientific changed how I think about data. Not because of the tools — because of what it looks like when data is broken and nobody knows it."
+title: "What 20 Executive Dashboards Taught Me About Real Data"
+date: "2026-03-10"
+tag: "Data & AI"
+excerpt: "My internship changed how I think about data. Not because dashboards are flashy, but because they showed me how messy definitions, unclear questions, and weak data quality affect real business decisions."
 readTime: "6 min read"
 ---
 
-My first week at Kewaunee, I sat down in front of a Zoho Analytics workspace and realized very quickly that the gap between "data analyst" on a job posting and what data analysis actually looks like inside a real business is significant.
+My first week at Kewaunee Scientific, I sat down in front of a Zoho Analytics workspace and realized quickly that the gap between data analyst on a job posting and what data analysis looks like inside a real business is significant.
 
-The data I was working with hadn't been architected for analysis. It had been created for operations — sales reps logging deals, estimators entering project specs, managers tracking open jobs. Over years of normal use, the same concept had accumulated different names in different systems, date fields had inconsistent formats, and there was no single source of truth for anything. This is not a criticism of Kewaunee. This is how most business data looks when you get close to it.
+The data I was working with had not been architected for analysis. It had been created for operations. Sales reps logging deals. Estimators entering project specs. Managers tracking open jobs. Over years of normal use, the same concept had accumulated different names in different systems, date fields had inconsistent formats, and there was no single source of truth for anything. This is not a criticism of Kewaunee. This is how most business data looks when you get close to it.
 
-The first real project I was given was an audit. 2,000+ CRM and estimating records, reviewed for consistency and accuracy.
+**The Audit**
 
-**What an Audit Actually Looks Like**
+The first real project I was assigned was an audit. Over two thousand CRM and estimating records, reviewed for consistency and accuracy.
 
-People hear "data audit" and imagine elegant SQL queries catching anomalies. The reality, at least at this stage, was more manual. I was looking for patterns in the inconsistencies — field names that meant different things in different contexts, records with missing values that were genuinely missing versus records where "missing" meant something specific to the business, duplicate entries created by different users working the same account.
+People hear data audit and imagine elegant SQL queries catching anomalies. The reality was more manual. I was looking for patterns in the inconsistencies. Field names that meant different things in different contexts. Records with missing values that were genuinely missing versus records where missing meant something specific to the business process. Duplicate entries created by different users working the same account.
 
-The thing that surprised me most was how much the inconsistencies were invisible to the people who had been working with the data for years. When you're inside a system every day, you develop workarounds without realizing you've developed workarounds. You know that "Project Status: Pending" in this system means something different than "Pending" in that system. That knowledge lives in your head and nowhere else.
+What surprised me most was how invisible the inconsistencies were to people who had worked with the data for years. When you are inside a system every day, you develop workarounds without realizing you have developed workarounds. You know that Project Status: Pending in one system means something different than Pending in another. That knowledge lives in your head and nowhere else.
 
-The data dictionary project was designed to solve exactly that. Document every field, every table, every metric definition in a single place. Define what "closed" means, what "active" means, what the difference between "proposal sent" and "quote approved" is in terms of the actual sales process.
+The data dictionary project was built to fix that at the root. Document every field, every table, every metric definition in one place. Define what closed means. Define what active means. Define the difference between proposal sent and quote approved in terms of the actual sales process.
 
-Every time two people pull a report and get different numbers, it's almost never because one of them made a mistake. It's because they're defining the same metric in two different ways and nobody wrote it down. The data dictionary fixes that at the root.
+Every time two people pull a report and get different numbers, it is almost never because one of them made a mistake. It is because they are defining the same metric in two different ways and nobody wrote it down.
 
 **Building the Dashboards**
 
-The 20+ executive dashboards and 100+ visualizations I built over the internship taught me something that no data science class had: executives don't look at dashboards to analyze data. They look at them to make decisions fast.
+The dashboards and visualizations I built over the internship taught me something no data science class had. Executives do not look at dashboards to analyze data. They look at them to make decisions fast.
 
-That distinction completely changes how you design a dashboard. The most important number on the screen needs to be immediately obvious — not buried in a tab, not accessible after a filter, not visible only after scrolling. It needs to be the first thing someone sees when the dashboard loads. Every other element either supports that number or explains it.
+That distinction changes how you design a dashboard. The most important number on the screen needs to be immediately obvious. Not buried in a tab, not accessible after a filter, not visible only after scrolling. It needs to be the first thing someone sees when the dashboard loads. Every other element either supports that number or explains it.
 
-I also learned what happens when you over-engineer a dashboard. I built one early on with 14 different visualizations, three filter panels, and a table that could sort six ways. Nobody used it. I rebuilt it with four numbers, two charts, and a single date range filter. That version got referenced in weekly meetings.
+I also learned what happens when you over-engineer a dashboard. I built one early on with fourteen different visualizations, three filter panels, and a table that could sort six ways. Nobody used it. I rebuilt it with four numbers, two charts, and a single date range filter. That version got referenced in weekly meetings.
 
-The expiring project tracking system was the most operationally meaningful thing I built. Projects in the pipeline have expiration dates that aren't visible anywhere in the standard interface — they're in the data, but you'd have to know to look. I built a tracker that surfaced projects approaching expiration with color-coded urgency levels, giving the sales team time to act before deals went cold. That's the version of analytics work I find most satisfying: not reporting on what happened, but creating visibility that changes what happens next.
+The expiring project tracking system was the most operationally meaningful thing I built. Projects in the pipeline had expiration dates that were in the data but not visible anywhere in the standard interface. I built a tracker that surfaced projects approaching expiration with color-coded urgency levels, giving the team time to act before deals went cold. That is the version of analytics work I find most satisfying. Not reporting on what happened. Creating visibility that changes what happens next.
 
 **The Bigger Lesson**
 
-The actual work of data analysis — in a real business, on real data — is mostly preparation. Cleaning, auditing, documenting, standardizing. The visualizations and the insights are the last 20% of the work. The first 80% is making sure the foundation is reliable enough that the 20% is actually worth building on.
+The actual work of data analysis on real business data is mostly preparation. Cleaning, auditing, documenting, standardizing. The visualizations and insights are the last twenty percent of the work. The first eighty percent is making sure the foundation is reliable enough that the twenty percent is worth building on.
 
-That's not glamorous. It's also not what most data science courses spend time on. If I had to identify the single biggest gap between academic data science and professional data science, that's it.
-
-The tools matter less than the discipline. Zoho Analytics, Tableau, Power BI, Looker — they're all capable of producing good dashboards if the data going in is clean and the design decisions are intentional. None of them can fix a messy foundation for you.
+That is not glamorous. It is also not what most data science courses spend time on. If I had to identify the single biggest gap between academic data science and professional data science, that is it.
