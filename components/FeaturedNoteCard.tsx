@@ -75,7 +75,7 @@ export function FeaturedNoteCard({ note, index }: { note: Note; index: number })
             right: 16,
             fontSize: 'clamp(48px, 6vw, 72px)',
             fontWeight: 800,
-            color: index === 1 ? 'var(--blue)' : 'var(--gold)',
+            color: 'var(--gold)',
             opacity: 0.1,
             lineHeight: 0.8,
           }}

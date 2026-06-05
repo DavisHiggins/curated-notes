@@ -57,13 +57,6 @@ export function NoteCard({
           transitionTimingFunction: 'ease',
         }}
       >
-        {/* slight glimmer sweep */}
-        <span
-          className="card-shine"
-          aria-hidden
-          style={{ animationDelay: `${index * 1.3}s` }}
-        />
-
         {/* gold left border, scales in on hover */}
         <span
           className="absolute left-0 top-0 bottom-0 origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100"

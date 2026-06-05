@@ -19,8 +19,12 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       gsap.registerPlugin(ScrollTrigger)
 
       lenis = new Lenis({
-        duration: 1.2,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        // Higher lerp tracks the wheel more tightly and settles quickly,
+        // so there is little drift after the user stops scrolling.
+        lerp: 0.14,
+        wheelMultiplier: 1,
+        smoothWheel: true,
+        touchMultiplier: 1.6,
       })
 
       // Expose for anchor scrolling (e.g. the note-page back link to #all-notes).
