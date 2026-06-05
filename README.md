@@ -1,4 +1,4 @@
-# Curated Notes
+# Curated Notes - notes.davishiggins.com
 
 A clean, personal notes website for publishing organized, readable, and visually polished notes.
 
