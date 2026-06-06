@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     'A public notebook by Davis Higgins. Data science, AI, building, faith, and the systems behind the work.',
   metadataBase: new URL('https://notes.davishiggins.com'),
   icons: {
-    icon: '/cnoteslogo.png',
-    apple: '/cnoteslogo.png',
+    icon: '/cnoteslogo-gold.png',
+    apple: '/cnoteslogo-gold.png',
   },
   openGraph: {
     title: 'Curated Notes | Davis Higgins',
