@@ -42,10 +42,9 @@ const imgIcon = (src: string) => (
 const LINKS: LinkItem[] = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/davishiggins/', icon: LinkedInIcon },
   { label: 'Instagram', href: 'https://www.instagram.com/higgins.digital', icon: InstagramIcon },
-  { label: 'Davis Higgins', href: 'https://davishiggins.com', icon: imgIcon('/dh-logo.png') },
-  { label: 'CrownCode AI', href: 'https://crowncode.higginsd.com', icon: imgIcon('/crowncode-icon.png') },
-  { label: 'Higgins Digital', href: 'https://higginsd.com', icon: imgIcon('/hdlogo.png') },
   { label: 'GitHub', href: 'https://github.com/DavisHiggins', icon: GitHubIcon },
+  { label: 'Davis Higgins', href: 'https://davishiggins.com', icon: imgIcon('/dh-logo.png') },
+  { label: 'Higgins Digital', href: 'https://higginsd.com', icon: imgIcon('/hdlogo.png') },
 ]
 
 // Display the destination without the protocol or a trailing slash.
