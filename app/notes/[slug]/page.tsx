@@ -23,15 +23,36 @@ export async function generateMetadata({
   const { slug } = await params
   const note = getNoteBySlug(slug)
   if (!note) return { title: 'Note not found | Curated Notes' }
+  const url = `/notes/${note.slug}`
   return {
     title: `${note.title} | Curated Notes`,
     description: note.excerpt,
+    alternates: { canonical: url },
     openGraph: {
       title: note.title,
       description: note.excerpt,
+      url,
       type: 'article',
     },
   }
+}
+
+/**
+ * Article links. External destinations open in a new tab with the same safe
+ * rel attributes used by the related-project and footer links.
+ */
+const mdxComponents = {
+  a: ({ href = '', ...props }: React.ComponentPropsWithoutRef<'a'>) => {
+    const external = /^https?:\/\//.test(href)
+    return (
+      <a
+        href={href}
+        data-cursor="pointer"
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        {...props}
+      />
+    )
+  },
 }
 
 export default async function NotePage({
@@ -66,7 +87,7 @@ export default async function NotePage({
 
           <NoteReveal>
             <div className="prose prose-invert max-w-none">
-              <MDXRemote source={note.content} />
+              <MDXRemote source={note.content} components={mdxComponents} />
             </div>
 
             {note.relatedProject && (

@@ -9,6 +9,12 @@ export type Note = {
   tag: string
   excerpt: string
   readTime: string
+  /**
+   * Tie-break for notes published on the same date. Lower comes first.
+   * Notes without it fall back to 0, which keeps older single-date notes
+   * in their existing position.
+   */
+  order?: number
   relatedProject?: string
   relatedProjectLabel?: string
   content: string
@@ -16,8 +22,8 @@ export type Note = {
 
 /** Slugs shown in the Featured row, in display order. */
 export const FEATURED_SLUGS = [
-  'propify-breakdown',
-  'balancing-everything',
+  'ai-literacy',
+  'confidence',
   'faith-christ-relationship',
 ]
 
@@ -32,7 +38,13 @@ export function getAllNotes(): Note[] {
       const { data, content } = matter(raw)
       return { slug, content, ...data } as Note
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => {
+      const byDate = new Date(b.date).getTime() - new Date(a.date).getTime()
+      if (byDate !== 0) return byDate
+      // Same publication date: fall back to the explicit order field so the
+      // feed sequence is deterministic instead of filesystem dependent.
+      return (a.order ?? 0) - (b.order ?? 0)
+    })
 }
 
 export function getNoteBySlug(slug: string): Note | null {
