@@ -14,7 +14,7 @@ export function BackLink() {
         ←
       </motion.span>
       <span className="transition-colors duration-200 group-hover:text-[var(--gold)]">
-        Curated Notes
+        Back
       </span>
     </motion.a>
   )

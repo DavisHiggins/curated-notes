@@ -74,7 +74,7 @@ export default async function NotePage({
 
       <main className="px-6 sm:px-10 pt-32 pb-8">
         <article className="max-w-[680px] mx-auto">
-          <div className="mb-10">
+          <div className="mb-10 flex justify-end">
             <BackLink />
           </div>
 
