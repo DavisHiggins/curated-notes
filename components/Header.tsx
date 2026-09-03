@@ -105,9 +105,6 @@ export function Header() {
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         data-cursor="pointer"
       >
-        <motion.span aria-hidden whileHover={{ x: -4 }} className="inline-block">
-          ←
-        </motion.span>
         <span className="transition-colors duration-200 group-hover:text-[var(--gold)]">
           davishiggins.com
         </span>

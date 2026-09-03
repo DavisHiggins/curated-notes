@@ -29,6 +29,19 @@ const GitHubIcon = (
   </svg>
 )
 
+const MailIcon = (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2.6" stroke="currentColor" strokeWidth="1.9" />
+    <path
+      d="m3.6 6.9 7.4 5.3a1.9 1.9 0 0 0 2.2 0l7.4-5.3"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
 const imgIcon = (src: string) => (
   <Image
     src={src}
@@ -45,11 +58,12 @@ const LINKS: LinkItem[] = [
   { label: 'GitHub', href: 'https://github.com/DavisHiggins', icon: GitHubIcon },
   { label: 'Davis Higgins', href: 'https://davishiggins.com', icon: imgIcon('/dh-logo.png') },
   { label: 'Higgins Digital', href: 'https://higginsd.com', icon: imgIcon('/hdlogo.png') },
+  { label: 'Email', href: 'mailto:davishiggins@icloud.com', icon: MailIcon },
 ]
 
 // Display the destination without the protocol or a trailing slash.
 function cleanUrl(href: string): string {
-  return href.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  return href.replace(/^(https?:\/\/|mailto:)/, '').replace(/\/$/, '')
 }
 
 export function SocialLinks() {

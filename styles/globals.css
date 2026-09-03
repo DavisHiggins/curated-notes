@@ -67,6 +67,18 @@
 
 html {
   scroll-behavior: auto;
+
+  /* The native scrollbar is replaced by the gold-to-blue progress lines:
+     vertical on the feed, horizontal at the top of each note. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 body {

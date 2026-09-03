@@ -7,6 +7,7 @@ import { FeaturedNoteCard } from '@/components/FeaturedNoteCard'
 import { TagFilter } from '@/components/TagFilter'
 import { Footer } from '@/components/Footer'
 import { HashScroll } from '@/components/HashScroll'
+import { ScrollProgress } from '@/components/ScrollProgress'
 
 export default function HomePage() {
   const notes = getAllNotes()
@@ -16,6 +17,7 @@ export default function HomePage() {
   return (
     <>
       <HashScroll />
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
