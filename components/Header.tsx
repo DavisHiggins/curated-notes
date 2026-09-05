@@ -16,12 +16,15 @@ export function Header() {
     setScrolled(latest > 60)
   })
 
+  // On mobile the header sits at the top of the page and scrolls away with
+  // the rest of the content (absolute); at sm+ it stays pinned as a fixed
+  // bar the way it always has.
   return (
     <motion.header
       initial={{ y: -8, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-3.5"
+      className="absolute sm:fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-3.5"
       style={{
         background: scrolled ? 'rgba(6,8,15,0.88)' : 'rgba(6,8,15,0)',
         backdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
