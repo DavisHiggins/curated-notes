@@ -128,7 +128,7 @@ export function FeaturedNoteCard({ note, index }: { note: Note; index: number })
             flexGrow: 1,
           }}
         >
-          {note.excerpt}
+          {note.note}
         </p>
 
         <div className="flex items-center justify-between mt-5">
@@ -142,7 +142,7 @@ export function FeaturedNoteCard({ note, index }: { note: Note; index: number })
             className="flex items-center gap-1.5 font-ui"
             style={{ fontSize: 12.5, color: 'var(--gold)', fontWeight: 600 }}
           >
-            <span className="read-excerpt">Read excerpt</span>
+            <span className="read-note">Read note</span>
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">
               →
             </span>

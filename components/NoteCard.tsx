@@ -156,14 +156,14 @@ export function NoteCard({
             flexGrow: grid ? 1 : undefined,
           }}
         >
-          {note.excerpt}
+          {note.note}
         </p>
 
         <div
           className="flex items-center gap-1.5 mt-5 font-ui"
           style={{ fontSize: 13, color: 'var(--gold)', fontWeight: 600 }}
         >
-          <span className="read-excerpt">Read excerpt</span>
+          <span className="read-note">Read note</span>
           <motion.span aria-hidden className="inline-block" variants={{}}>
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">
               →

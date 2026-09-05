@@ -26,11 +26,11 @@ export async function generateMetadata({
   const url = `/notes/${note.slug}`
   return {
     title: `${note.title} | Curated Notes`,
-    description: note.excerpt,
+    description: note.note,
     alternates: { canonical: url },
     openGraph: {
       title: note.title,
-      description: note.excerpt,
+      description: note.note,
       url,
       type: 'article',
     },

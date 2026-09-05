@@ -40,19 +40,29 @@ export function NoteNav({
   const next = idx >= 0 && idx < list.length - 1 ? list[idx + 1] : null
   const fromQ = `?from=${encodeURIComponent(from)}`
 
+  // On mobile, when both Previous and Next exist, stack them vertically so
+  // the two buttons never share a row and overflow the viewport (which was
+  // pushing the whole article column off-center on phones). Previous stays
+  // on top of Next per the requested order.
+  const stack = Boolean(prev && next)
+
   return (
     <nav
-      className="flex items-stretch justify-between gap-4 mt-16 pt-10"
+      className={`mt-16 pt-10 gap-4 ${
+        stack
+          ? 'flex flex-col items-stretch sm:flex-row sm:items-stretch sm:justify-between'
+          : 'flex items-stretch justify-between'
+      }`}
       style={{ borderTop: '1px solid rgba(201,168,76,0.15)' }}
       aria-label="Note navigation"
     >
       {/* Left: Previous (only when not the first note in the section) */}
-      <div className="flex">
+      <div className={stack ? 'flex sm:block' : 'flex'}>
         {prev ? (
           <a
             href={`/notes/${prev.slug}${fromQ}`}
             data-cursor="pointer"
-            className="note-nav-btn group"
+            className={`note-nav-btn group ${stack ? 'note-nav-btn--stacked' : ''}`}
           >
             <motion.span
               aria-hidden
@@ -88,12 +98,12 @@ export function NoteNav({
       </div>
 
       {/* Right: Next Note, or Return at the end of the section */}
-      <div className="flex justify-end">
+      <div className={stack ? 'flex sm:justify-end' : 'flex justify-end'}>
         {next ? (
           <a
             href={`/notes/${next.slug}${fromQ}`}
             data-cursor="pointer"
-            className="note-nav-btn group"
+            className={`note-nav-btn group ${stack ? 'note-nav-btn--stacked' : ''}`}
           >
             <span className="flex flex-col text-right min-w-0">
               <span

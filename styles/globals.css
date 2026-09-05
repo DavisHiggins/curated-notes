@@ -251,6 +251,18 @@ a {
   transform: translateY(-2px);
 }
 
+/* When Previous and Next both exist we stack them on mobile so they never
+   share a row (which was overflowing the viewport and pulling the whole
+   article column off-center). Buttons expand to the row width on phones and
+   revert to the compact desktop cap at the sm breakpoint. */
+@media (max-width: 639px) {
+  .note-nav-btn--stacked {
+    display: flex;
+    width: 100%;
+    max-width: none;
+  }
+}
+
 /* Hero "All Notes" jump button */
 .all-notes-btn {
   padding: 11px 20px;
@@ -357,11 +369,11 @@ button:focus-visible {
   border-radius: 4px;
 }
 
-/* "Read excerpt" underline grow on hover */
-.read-excerpt {
+/* "Read note" underline grow on hover */
+.read-note {
   position: relative;
 }
-.read-excerpt::after {
+.read-note::after {
   content: '';
   position: absolute;
   left: 0;
@@ -373,7 +385,7 @@ button:focus-visible {
   transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.group:hover .read-excerpt::after {
+.group:hover .read-note::after {
   transform: scaleX(1);
 }
 

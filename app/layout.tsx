@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Syne, DM_Sans, Lora } from 'next/font/google'
 import '../styles/globals.css'
 import { LenisProvider } from '@/providers/LenisProvider'
@@ -44,6 +44,17 @@ export const metadata: Metadata = {
     siteName: 'Curated Notes',
     type: 'website',
   },
+}
+
+// Lock the mobile viewport at 1x so pinch-to-zoom can't shrink the page and
+// leave the content column visually off-center on phones.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({

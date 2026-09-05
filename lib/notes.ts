@@ -7,7 +7,7 @@ export type Note = {
   title: string
   date: string
   tag: string
-  excerpt: string
+  note: string
   readTime: string
   /**
    * Tie-break for notes published on the same date. Lower comes first.
